@@ -14,6 +14,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 @Controller('user')
 export class UserController {
   constructor(private userService: UserService) {}
+
   @UseGuards(JwtAuthGuard)
   @Post()
   create(@Body() body: CreateUserDto) {

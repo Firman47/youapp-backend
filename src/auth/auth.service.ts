@@ -3,6 +3,7 @@ import { LoginAuthDto } from './dto/login-auth.dto';
 import { UserService } from '../user/user.service';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { Response } from 'express';
 
 @Injectable()
 export class AuthService {
@@ -11,7 +12,7 @@ export class AuthService {
     private jwtService: JwtService,
   ) {}
 
-  async login(data: LoginAuthDto) {
+  async login(data: LoginAuthDto, res: Response) {
     if (!data.username && !data.email) {
       throw new UnauthorizedException('Username or email is required');
     }
@@ -37,24 +38,20 @@ export class AuthService {
       email: user.email,
     };
 
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { password, ...userWithoutPassword } = user.toObject();
+    const token = this.jwtService.sign(payload);
 
-    return {
-      access_token: this.jwtService.sign(payload),
-      user: userWithoutPassword,
-    };
+    res.cookie('access_token', token, { httpOnly: true });
+
+    return { access_token: token };
   }
 
-  async validateUser(credential: string, password: string) {
-    const user = await this.userService.findByCredential(credential);
+  logout(res: Response) {
+    res.clearCookie('access_token', {
+      httpOnly: true,
+      sameSite: 'lax',
+      secure: false,
+    });
 
-    if (!user) return null;
-
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) return null;
-
-    const { password: _password, ...result } = user.toObject();
-    return result;
+    return { message: 'Logged out successfully' };
   }
 }
