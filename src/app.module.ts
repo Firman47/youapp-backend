@@ -22,8 +22,8 @@ dns.setServers(['8.8.8.8', '1.1.1.1']);
       }),
     }),
 
-    UserModule,
     AuthModule,
+    UserModule,
     ProfileModule,
   ],
   controllers: [AppController],
