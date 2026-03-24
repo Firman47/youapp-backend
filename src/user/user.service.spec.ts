@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from './user.service';
 import { getModelToken } from '@nestjs/mongoose';
-import { User } from './schemas/user.schema';
+import { User } from './user.schema';
 
 const mockModel = {};
 
