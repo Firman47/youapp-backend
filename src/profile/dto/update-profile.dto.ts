@@ -11,30 +11,36 @@ import {
   ArrayMaxSize,
 } from 'class-validator';
 import { CreateProfileDto, Gender } from './create-profile.dto';
-import { PartialType } from '@nestjs/swagger';
+import { ApiProperty, PartialType } from '@nestjs/swagger';
 
 export class UpdateProfileDto extends PartialType(CreateProfileDto) {
+  @ApiProperty()
   @IsOptional()
   @IsString()
   @MaxLength(50)
   name?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsEnum(Gender)
   gender?: Gender;
 
+  @ApiProperty()
   @IsOptional()
   @IsDateString()
   birthday?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   horoscope?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsString()
   zodiac?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsNumber()
   @Min(50)
@@ -52,6 +58,7 @@ export class UpdateProfileDto extends PartialType(CreateProfileDto) {
   @MaxLength(300)
   bio?: string;
 
+  @ApiProperty()
   @IsOptional()
   @IsArray()
   @IsString({ each: true })
