@@ -7,6 +7,7 @@ import { AuthModule } from './auth/auth.module';
 import { ProfileModule } from './profile/profile.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { ChatModule } from './chat/chat.module';
 
 dns.setServers(['8.8.8.8', '1.1.1.1']);
 
@@ -25,6 +26,7 @@ dns.setServers(['8.8.8.8', '1.1.1.1']);
     UserModule,
     ProfileModule,
     AuthModule,
+    ChatModule,
   ],
   controllers: [AppController],
   providers: [AppService],
