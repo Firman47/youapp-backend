@@ -42,7 +42,13 @@ export class AuthService {
 
     res.cookie('access_token', token, { httpOnly: true });
 
-    return { access_token: token };
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { password, ...safeUser } = user.toObject();
+
+    return {
+      data: safeUser,
+      meta: { access_token: token },
+    };
   }
 
   logout(res: Response) {
@@ -51,7 +57,5 @@ export class AuthService {
       sameSite: 'lax',
       secure: false,
     });
-
-    return { message: 'Logged out successfully' };
   }
 }
